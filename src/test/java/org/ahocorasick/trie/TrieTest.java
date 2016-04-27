@@ -18,7 +18,7 @@ public class TrieTest {
         Trie trie = Trie.builder()
                 .addKeyword("abc")
                 .build();
-        Collection<Emit> emits = trie.parseText("abc");
+        List<Emit> emits = trie.parseText("abc");
         Iterator<Emit> iterator = emits.iterator();
         checkEmit(iterator.next(), 0, 2, "abc");
     }
@@ -37,7 +37,7 @@ public class TrieTest {
         Trie trie = Trie.builder()
                 .addKeyword("abc")
                 .build();
-        Collection<Emit> emits = trie.parseText(" abc");
+        List<Emit> emits = trie.parseText(" abc");
         Iterator<Emit> iterator = emits.iterator();
         checkEmit(iterator.next(), 1, 3, "abc");
     }
@@ -58,7 +58,7 @@ public class TrieTest {
                 .addKeyword("bcd")
                 .addKeyword("cde")
                 .build();
-        Collection<Emit> emits = trie.parseText("bcd");
+        List<Emit> emits = trie.parseText("bcd");
         Iterator<Emit> iterator = emits.iterator();
         checkEmit(iterator.next(), 0, 2, "bcd");
     }
@@ -83,7 +83,7 @@ public class TrieTest {
                 .addKeyword("he")
                 .stopOnHit()
                 .build();
-        Collection<Emit> emits = trie.parseText("ushers");
+        List<Emit> emits = trie.parseText("ushers");
         assertEquals(2, emits.size()); // she @ 3, he @ 3, hers @ 5
         Iterator<Emit> iterator = emits.iterator();
         checkEmit(iterator.next(), 2, 3, "he");
@@ -98,7 +98,7 @@ public class TrieTest {
                 .addKeyword("she")
                 .addKeyword("he")
                 .build();
-        Collection<Emit> emits = trie.parseText("ushers");
+        List<Emit> emits = trie.parseText("ushers");
         assertEquals(3, emits.size()); // she @ 3, he @ 3, hers @ 5
         Iterator<Emit> iterator = emits.iterator();
         checkEmit(iterator.next(), 2, 3, "he");
@@ -115,7 +115,7 @@ public class TrieTest {
                 .addKeyword("SHE")
                 .addKeyword("HE")
                 .build();
-        Collection<Emit> emits = trie.parseText("ushers");
+        List<Emit> emits = trie.parseText("ushers");
         assertEquals(3, emits.size()); // she @ 3, he @ 3, hers @ 5
         Iterator<Emit> iterator = emits.iterator();
         checkEmit(iterator.next(), 2, 3, "he");
@@ -165,7 +165,7 @@ public class TrieTest {
         Trie trie = Trie.builder()
                 .addKeyword("hers")
                 .build();
-        Collection<Emit> emits = trie.parseText("h he her hers");
+        List<Emit> emits = trie.parseText("h he her hers");
         Iterator<Emit> iterator = emits.iterator();
         checkEmit(iterator.next(), 9, 12, "hers");
     }
@@ -187,7 +187,7 @@ public class TrieTest {
                 .addKeyword("broccoli")
                 .addKeyword("tomatoes")
                 .build();
-        Collection<Emit> emits = trie.parseText("2 cauliflowers, 3 tomatoes, 4 slices of veal, 100g broccoli");
+        List<Emit> emits = trie.parseText("2 cauliflowers, 3 tomatoes, 4 slices of veal, 100g broccoli");
         Iterator<Emit> iterator = emits.iterator();
         checkEmit(iterator.next(), 2, 12, "cauliflower");
         checkEmit(iterator.next(), 18, 25, "tomatoes");
@@ -214,7 +214,7 @@ public class TrieTest {
                 .addKeyword("he")
                 .addKeyword("hehehehe")
                 .build();
-        Collection<Emit> emits = trie.parseText("hehehehehe");
+        List<Emit> emits = trie.parseText("hehehehehe");
         Iterator<Emit> iterator = emits.iterator();
         checkEmit(iterator.next(), 0, 1, "he");
         checkEmit(iterator.next(), 2, 3, "he");
@@ -232,7 +232,7 @@ public class TrieTest {
                 .addKeyword("cba")
                 .addKeyword("ababc")
                 .build();
-        Collection<Emit> emits = trie.parseText("ababcbab");
+        List<Emit> emits = trie.parseText("ababcbab");
         assertEquals(2, emits.size());
         Iterator<Emit> iterator = emits.iterator();
         // With overlaps: ab@1, ab@3, ababc@4, cba@6, ab@7
@@ -276,7 +276,7 @@ public class TrieTest {
                 .addKeyword("n")
                 .addKeyword("urning")
                 .build();
-        Collection<Emit> emits = trie.parseText("Turning");
+        List<Emit> emits = trie.parseText("Turning");
         assertEquals(2, emits.size());
     }
 
@@ -286,7 +286,7 @@ public class TrieTest {
                 .onlyWholeWords()
                 .addKeyword("sugar")
                 .build();
-        Collection<Emit> emits = trie.parseText("sugarcane sugarcane sugar canesugar"); // left, middle, right test
+        List<Emit> emits = trie.parseText("sugarcane sugarcane sugar canesugar"); // left, middle, right test
         assertEquals(1, emits.size()); // Match must not be made
         checkEmit(emits.iterator().next(), 20, 24, "sugar");
     }
@@ -329,7 +329,7 @@ public class TrieTest {
                 .addKeyword("again")
                 .addKeyword("börkü")
                 .build();
-        Collection<Emit> emits = trie.parseText("TurninG OnCe AgAiN BÖRKÜ");
+        List<Emit> emits = trie.parseText("TurninG OnCe AgAiN BÖRKÜ");
         assertEquals(4, emits.size()); // Match must not be made
         Iterator<Emit> it = emits.iterator();
         checkEmit(it.next(), 0, 6, "turning");
@@ -346,7 +346,7 @@ public class TrieTest {
                 .addKeyword("again")
                 .addKeyword("börkü")
                 .build();
-        Collection<Emit> emits = trie.parseText("TurninG OnCe AgAiN BÖRKÜ");
+        List<Emit> emits = trie.parseText("TurninG OnCe AgAiN BÖRKÜ");
         assertEquals(4, emits.size()); // Match must not be made
         Iterator<Emit> it = emits.iterator();
         checkEmit(it.next(), 0, 6, "turning");
@@ -396,7 +396,7 @@ public class TrieTest {
         Trie trie = Trie.builder().caseInsensitive().onlyWholeWords()
                 .addKeyword("this")
                 .build();
-        Collection<Emit> emits = trie.parseText(target);
+        List<Emit> emits = trie.parseText(target);
         assertEquals(1, emits.size());
         Iterator<Emit> it = emits.iterator();
         checkEmit(it.next(), 5, 8, "this");

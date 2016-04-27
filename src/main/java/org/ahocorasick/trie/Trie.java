@@ -70,7 +70,7 @@ public class Trie {
     }
 
     @SuppressWarnings("unchecked")
-    public Collection<Emit> parseText(CharSequence text) {
+    public List<Emit> parseText(CharSequence text) {
         DefaultEmitHandler emitHandler = new DefaultEmitHandler();
         parseText(text, emitHandler);
 
