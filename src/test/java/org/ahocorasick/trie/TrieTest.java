@@ -1,5 +1,6 @@
 package org.ahocorasick.trie;
 
+import org.ahocorasick.text.FoldToASCII;
 import org.ahocorasick.trie.handler.EmitHandler;
 import org.junit.Test;
 
@@ -353,6 +354,36 @@ public class TrieTest {
         checkEmit(it.next(), 8, 11, "once");
         checkEmit(it.next(), 13, 17, "again");
         checkEmit(it.next(), 19, 23, "börkü");
+    }
+
+    @Test
+    public void caseInsensitiveAndFoldToASCII() {
+        Trie trie = Trie.builder().caseInsensitive().setCharacterConverter(new FoldToASCII())
+                .addKeyword("turning")
+                .addKeyword("once")
+                .addKeyword("again")
+                .addKeyword("borku")
+                .build();
+        List<Emit> emits = trie.parseText("TurninĜ OnCễ āgAiN BÖRKü");
+        assertEquals(4, emits.size()); // Match must not be made
+        Iterator<Emit> it = emits.iterator();
+        checkEmit(it.next(), 0, 6, "turning");
+        checkEmit(it.next(), 8, 11, "once");
+        checkEmit(it.next(), 13, 17, "again");
+        checkEmit(it.next(), 19, 23, "borku");
+    }
+
+    @Test
+    public void treatMultipleSpacesAsOneSpace() {
+        Trie trie = Trie.builder().treatMultipleSpacesAsOneSpace()
+                .addKeyword("turning circle")
+                .addKeyword("once is enough")
+                .build();
+        List<Emit> emits = trie.parseText("    turning    circle    - once      is     enough");
+        assertEquals(2, emits.size()); // Match must not be made
+        Iterator<Emit> it = emits.iterator();
+        checkEmit(it.next(), 4, 20, "turning circle");
+        checkEmit(it.next(), 27, 49, "once is enough");
     }
 
     @Test

@@ -1,5 +1,7 @@
 package org.ahocorasick.trie;
 
+import org.ahocorasick.text.CharacterConverter;
+
 public class TrieConfig {
 
     private boolean allowOverlaps = true;
@@ -10,7 +12,11 @@ public class TrieConfig {
 
     private boolean caseInsensitive = false;
 
+    private boolean treatMultipleSpacesAsOneSpace = false;
+
     private boolean stopOnHit = false;
+
+    private CharacterConverter characterConverter = null;
 
     public boolean isStopOnHit() { return stopOnHit; }
 
@@ -44,5 +50,21 @@ public class TrieConfig {
 
     public void setCaseInsensitive(boolean caseInsensitive) {
         this.caseInsensitive = caseInsensitive;
+    }
+
+    public boolean isTreatMultipleSpacesAsOneSpace() {
+        return treatMultipleSpacesAsOneSpace;
+    }
+
+    public void setTreatMultipleSpacesAsOneSpace(boolean treatMultipleSpacesAsOneSpace) {
+        this.treatMultipleSpacesAsOneSpace = treatMultipleSpacesAsOneSpace;
+    }
+
+    public CharacterConverter getCharacterConverter() {
+        return characterConverter;
+    }
+
+    public void setCharacterConverter(CharacterConverter characterConverter) {
+        this.characterConverter = characterConverter;
     }
 }
