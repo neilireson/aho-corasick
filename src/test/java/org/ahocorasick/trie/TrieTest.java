@@ -17,6 +17,7 @@ public class TrieTest {
     @Test
     public void keywordAndTextAreTheSame() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("abc")
                 .build();
         List<Emit> emits = trie.parseText("abc");
@@ -27,6 +28,7 @@ public class TrieTest {
     @Test
     public void keywordAndTextAreTheSameFirstMatch() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("abc")
                 .build();
         Emit firstMatch = trie.firstMatch("abc");
@@ -36,6 +38,7 @@ public class TrieTest {
     @Test
     public void textIsLongerThanKeyword() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("abc")
                 .build();
         List<Emit> emits = trie.parseText(" abc");
@@ -46,6 +49,7 @@ public class TrieTest {
     @Test
     public void textIsLongerThanKeywordFirstMatch() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("abc")
                 .build();
         Emit firstMatch = trie.firstMatch(" abc");
@@ -55,6 +59,7 @@ public class TrieTest {
     @Test
     public void variousKeywordsOneMatch() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("abc")
                 .addKeyword("bcd")
                 .addKeyword("cde")
@@ -67,6 +72,7 @@ public class TrieTest {
     @Test
     public void variousKeywordsFirstMatch() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("abc")
                 .addKeyword("bcd")
                 .addKeyword("cde")
@@ -78,6 +84,7 @@ public class TrieTest {
     @Test
     public void ushersTestAndStopOnHit() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("hers")
                 .addKeyword("his")
                 .addKeyword("she")
@@ -94,6 +101,7 @@ public class TrieTest {
     @Test
     public void ushersTest() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("hers")
                 .addKeyword("his")
                 .addKeyword("she")
@@ -110,6 +118,7 @@ public class TrieTest {
     @Test
     public void ushersTestWithCapitalKeywords() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .caseInsensitive()
                 .addKeyword("HERS")
                 .addKeyword("HIS")
@@ -127,6 +136,7 @@ public class TrieTest {
     @Test
     public void ushersTestFirstMatch() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("hers")
                 .addKeyword("his")
                 .addKeyword("she")
@@ -139,6 +149,7 @@ public class TrieTest {
     @Test
     public void ushersTestByCallback() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("hers")
                 .addKeyword("his")
                 .addKeyword("she")
@@ -164,6 +175,7 @@ public class TrieTest {
     @Test
     public void misleadingTest() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("hers")
                 .build();
         List<Emit> emits = trie.parseText("h he her hers");
@@ -174,6 +186,7 @@ public class TrieTest {
     @Test
     public void misleadingTestFirstMatch() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("hers")
                 .build();
         Emit firstMatch = trie.firstMatch("h he her hers");
@@ -183,6 +196,7 @@ public class TrieTest {
     @Test
     public void recipes() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("veal")
                 .addKeyword("cauliflower")
                 .addKeyword("broccoli")
@@ -199,6 +213,7 @@ public class TrieTest {
     @Test
     public void recipesFirstMatch() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("veal")
                 .addKeyword("cauliflower")
                 .addKeyword("broccoli")
@@ -212,6 +227,7 @@ public class TrieTest {
     @Test
     public void longAndShortOverlappingMatch() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("he")
                 .addKeyword("hehehehe")
                 .build();
@@ -229,6 +245,7 @@ public class TrieTest {
     @Test
     public void nonOverlapping() {
         Trie trie = Trie.builder().removeOverlaps()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("ab")
                 .addKeyword("cba")
                 .addKeyword("ababc")
@@ -244,6 +261,7 @@ public class TrieTest {
     @Test
     public void nonOverlappingFirstMatch() {
         Trie trie = Trie.builder().removeOverlaps()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("ab")
                 .addKeyword("cba")
                 .addKeyword("ababc")
@@ -256,6 +274,7 @@ public class TrieTest {
     @Test
     public void containsMatch() {
         Trie trie = Trie.builder().removeOverlaps()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("ab")
                 .addKeyword("cba")
                 .addKeyword("ababc")
@@ -266,6 +285,7 @@ public class TrieTest {
     @Test
     public void startOfChurchillSpeech() {
         Trie trie = Trie.builder().removeOverlaps()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("T")
                 .addKeyword("u")
                 .addKeyword("ur")
@@ -284,6 +304,7 @@ public class TrieTest {
     @Test
     public void partialMatch() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .onlyWholeWords()
                 .addKeyword("sugar")
                 .build();
@@ -295,6 +316,7 @@ public class TrieTest {
     @Test
     public void partialMatchFirstMatch() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .onlyWholeWords()
                 .addKeyword("sugar")
                 .build();
@@ -306,6 +328,7 @@ public class TrieTest {
     @Test
     public void tokenizeFullSentence() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("Alpha")
                 .addKeyword("Beta")
                 .addKeyword("Gamma")
@@ -325,6 +348,7 @@ public class TrieTest {
     @Test
     public void bug5InGithubReportedByXCurry() {
         Trie trie = Trie.builder().caseInsensitive().onlyWholeWords()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("turning")
                 .addKeyword("once")
                 .addKeyword("again")
@@ -342,6 +366,7 @@ public class TrieTest {
     @Test
     public void caseInsensitive() {
         Trie trie = Trie.builder().caseInsensitive()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("turning")
                 .addKeyword("once")
                 .addKeyword("again")
@@ -359,36 +384,45 @@ public class TrieTest {
     @Test
     public void caseInsensitiveAndFoldToASCII() {
         Trie trie = Trie.builder().caseInsensitive().setCharacterConverter(new FoldToASCII())
+                .treatMultipleSpacesAsOneSpace()
+                .addKeyword("caen")
                 .addKeyword("turning")
                 .addKeyword("once")
-                .addKeyword("again")
+                .addKeyword("aagaain")
                 .addKeyword("borku")
                 .build();
-        List<Emit> emits = trie.parseText("TurninĜ OnCễ āgAiN BÖRKü");
-        assertEquals(4, emits.size()); // Match must not be made
+        List<Emit> emits = trie.parseText("cǼn TurninĜ OnCễ ꜲgꜳiN BÖRKü");
+        assertEquals(5, emits.size()); // Match must not be made
         Iterator<Emit> it = emits.iterator();
-        checkEmit(it.next(), 0, 6, "turning");
-        checkEmit(it.next(), 8, 11, "once");
-        checkEmit(it.next(), 13, 17, "again");
-        checkEmit(it.next(), 19, 23, "borku");
+        checkEmit(it.next(), 0, 2, "caen");
+        checkEmit(it.next(), 4, 10, "turning");
+        checkEmit(it.next(), 12, 15, "once");
+        checkEmit(it.next(), 17, 21, "aagaain");
+        checkEmit(it.next(), 23, 27, "borku");
     }
 
     @Test
     public void treatMultipleSpacesAsOneSpace() {
-        Trie trie = Trie.builder().treatMultipleSpacesAsOneSpace()
+        Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
+                .addKeyword("a")
+                .addKeyword("b")
                 .addKeyword("turning circle")
                 .addKeyword("once is enough")
                 .build();
-        List<Emit> emits = trie.parseText("    turning    circle    - once      is     enough");
-        assertEquals(2, emits.size()); // Match must not be made
+        List<Emit> emits = trie.parseText("  a  b turning    circle    - once      is     enough");
+        assertEquals(4, emits.size()); // Match must not be made
         Iterator<Emit> it = emits.iterator();
-        checkEmit(it.next(), 4, 20, "turning circle");
-        checkEmit(it.next(), 27, 49, "once is enough");
+        checkEmit(it.next(), 2, 2, "a");
+        checkEmit(it.next(), 5, 5, "b");
+        checkEmit(it.next(), 7, 23, "turning circle");
+        checkEmit(it.next(), 30, 52, "once is enough");
     }
 
     @Test
     public void caseInsensitiveFirstMatch() {
         Trie trie = Trie.builder().caseInsensitive()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("turning")
                 .addKeyword("once")
                 .addKeyword("again")
@@ -402,6 +436,7 @@ public class TrieTest {
     @Test
     public void tokenizeTokensInSequence() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("Alpha")
                 .addKeyword("Beta")
                 .addKeyword("Gamma")
@@ -414,6 +449,7 @@ public class TrieTest {
     @Test
     public void zeroLengthTestBug7InGithubReportedByXCurry() {
         Trie trie = Trie.builder().removeOverlaps().onlyWholeWords().caseInsensitive()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("")
                 .build();
         trie.tokenize("Try a natural lip and subtle bronzer to keep all the focus on those big bright eyes with NARS Eyeshadow Duo in Rated R And the winner is... Boots No7 Advanced Renewal Anti-ageing Glycolic Peel Kit ($25 amazon.com) won most-appealing peel.");
@@ -425,6 +461,7 @@ public class TrieTest {
         String target = "LİKE THIS"; // The second character ('İ') is Unicode, which was read by AC as a 2-byte char
         assertEquals("THIS", target.substring(5, 9)); // Java does it the right way
         Trie trie = Trie.builder().caseInsensitive().onlyWholeWords()
+                .treatMultipleSpacesAsOneSpace()
                 .addKeyword("this")
                 .build();
         List<Emit> emits = trie.parseText(target);
@@ -437,6 +474,7 @@ public class TrieTest {
     public void unicodeIssueBug8ReportedByDwyerkFirstMatch() {
         String target = "LİKE THIS"; // The second character ('İ') is Unicode, which was read by AC as a 2-byte char
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .caseInsensitive()
                 .onlyWholeWords()
                 .addKeyword("this")
@@ -449,6 +487,7 @@ public class TrieTest {
     @Test
     public void partialMatchWhiteSpaces() {
         Trie trie = Trie.builder()
+                .treatMultipleSpacesAsOneSpace()
                 .onlyWholeWordsWhiteSpaceSeparated()
                 .addKeyword("#sugar-123")
                 .build();

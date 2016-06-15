@@ -102,20 +102,21 @@ public class Trie {
         final CharacterConverter characterConverter = trieConfig.getCharacterConverter();
         State currentState = this.rootState;
         Character lastCharacter = '\0';
+        // todo perhaps this could be done more efficiently
+        int[] adjustedPosition = new int[text.length() + 1];
         // the last int is used to store the current number of ignored characters
-        int[] ignored = new int[text.length() + 1];
         for (int position = 0; position < text.length(); position++) {
-            ignored[position] = ignored[ignored.length - 1];
+            adjustedPosition[position] = adjustedPosition[adjustedPosition.length - 1];
             Character character = text.charAt(position);
             if (characterConverter != null) {
                 for (char c : characterConverter.convert(character)) {
-                    if ((currentState = parseCharacter(ignored, lastCharacter, c, position, emitHandler, currentState)) == null) {
+                    if ((currentState = parseCharacter(adjustedPosition, position, lastCharacter, c, emitHandler, currentState)) == null) {
                         return;
                     }
                     lastCharacter = c;
                 }
             } else {
-                if ((currentState = parseCharacter(ignored, lastCharacter, character, position, emitHandler, currentState)) == null) {
+                if ((currentState = parseCharacter(adjustedPosition, position, lastCharacter, character, emitHandler, currentState)) == null) {
                     return;
                 }
                 lastCharacter = character;
@@ -123,10 +124,12 @@ public class Trie {
         }
     }
 
-    private State parseCharacter(int[] ignored, Character lastCharacter, Character character, int position, EmitHandler emitHandler, State currentState) {
+    private State parseCharacter(int[] adjustedPosition, int position,
+                                 Character lastCharacter, Character character, EmitHandler emitHandler, State currentState) {
+        adjustedPosition[adjustedPosition.length - 1]++;
         if (trieConfig.isTreatMultipleSpacesAsOneSpace()) {
             if (Character.isWhitespace(lastCharacter) && Character.isWhitespace(character)) {
-                ++ignored[ignored.length - 1];
+                adjustedPosition[adjustedPosition.length - 1]--;
                 return currentState;
             }
         }
@@ -135,7 +138,7 @@ public class Trie {
             character = Character.toLowerCase(character);
         }
         currentState = getState(currentState, character);
-        if (storeEmits(ignored, position, currentState, emitHandler) && trieConfig.isStopOnHit()) {
+        if (storeEmits(adjustedPosition, position, currentState, emitHandler) && trieConfig.isStopOnHit()) {
             return null;
         }
         return currentState;
@@ -246,20 +249,31 @@ public class Trie {
         }
     }
 
-    private boolean storeEmits(int[] ignored, int position, State currentState, EmitHandler emitHandler) {
+    private boolean storeEmits(int[] adjustedPosition, int position, State currentState, EmitHandler emitHandler) {
         boolean emitted = false;
         Collection<String> emits = currentState.emit();
         if (emits != null && !emits.isEmpty()) {
             for (String emit : emits) {
-                int ignoredAtEnd = ignored[position];
-                int ignoredAtStart = ignored[position - (emit.length() - 1)];
-                int start = position - (emit.length() + (ignoredAtEnd - ignoredAtStart)) + 1;
-                while (ignored[start] != ignoredAtStart)
-                {
-                    ignoredAtStart = ignored[start];
-                    start = position - (emit.length() + (ignoredAtEnd - ignoredAtStart)) + 1;
+                int endAdjust = adjustedPosition[position] - position;
+                int startAdjustedPosition = endAdjust + position - (emit.length() - 1);
+                int startPosition = startAdjustedPosition;
+                // find the start position which is equal to the startAdjustedPosition
+                if (adjustedPosition[startPosition] <= startAdjustedPosition) {
+                    while (adjustedPosition[startPosition] < startAdjustedPosition)
+                        startPosition++;
+                    // startPosition != position
+                    //  is need to prevent case where startPosition == endPosition == 0 and all adjustedPosition == 0
+                    // adjustedPosition[startPosition + 1] == startAdjustedPosition
+                    //  is used to move startPosition to the highest position
+                    while (startPosition != position && adjustedPosition[startPosition + 1] == startAdjustedPosition) {
+                        startPosition++;
+                    }
                 }
-                emitHandler.emit(new Emit(start, position, emit));
+                // this will only be the case where character converter increases the number of characters
+                else while (adjustedPosition[startPosition] > startAdjustedPosition) {
+                    startPosition--;
+                }
+                emitHandler.emit(new Emit(startPosition, position, emit));
                 emitted = true;
             }
         }
