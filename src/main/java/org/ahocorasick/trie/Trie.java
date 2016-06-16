@@ -77,6 +77,8 @@ public class Trie {
 
         List<Emit> collectedEmits = emitHandler.getEmits();
 
+        // todo the process of identifying and then removing partial matching is inefficient.
+        // todo better to add state and end states which only match text start, end or spaces
         if (trieConfig.isOnlyWholeWords()) {
             removePartialMatches(text, collectedEmits);
         }
