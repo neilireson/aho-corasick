@@ -385,20 +385,22 @@ public class TrieTest {
     public void caseInsensitiveAndFoldToASCII() {
         Trie trie = Trie.builder().caseInsensitive().setCharacterConverter(new FoldToASCII())
                 .treatMultipleSpacesAsOneSpace()
-                .addKeyword("caen")
+                .addKeyword("dzaen")
                 .addKeyword("turning")
                 .addKeyword("once")
                 .addKeyword("aagaain")
                 .addKeyword("borku")
+                .addKeyword("fflip")
                 .build();
-        List<Emit> emits = trie.parseText("cǼn TurninĜ OnCễ ꜲgꜳiN BÖRKü");
-        assertEquals(5, emits.size()); // Match must not be made
+        List<Emit> emits = trie.parseText("ǅǼn TurninĜ OnCễ ꜲgꜳiN BÖRKü ﬄip");
+        assertEquals(6, emits.size()); // Match must not be made
         Iterator<Emit> it = emits.iterator();
-        checkEmit(it.next(), 0, 2, "caen");
+        checkEmit(it.next(), 0, 2, "dzaen");
         checkEmit(it.next(), 4, 10, "turning");
         checkEmit(it.next(), 12, 15, "once");
         checkEmit(it.next(), 17, 21, "aagaain");
         checkEmit(it.next(), 23, 27, "borku");
+        checkEmit(it.next(), 29, 31, "fflip");
     }
 
     @Test
