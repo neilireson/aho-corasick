@@ -21,6 +21,8 @@ import java.util.concurrent.LinkedBlockingDeque;
 public class Trie
         implements Serializable {
 
+    private static final long serialVersionUID = -7602746174340365455L;
+
     private TrieConfig trieConfig;
 
     private State rootState;

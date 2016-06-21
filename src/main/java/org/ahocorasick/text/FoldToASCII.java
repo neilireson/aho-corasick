@@ -52,6 +52,9 @@ import java.io.Serializable;
  */
 public class FoldToASCII
         extends AbstractCharacterConverter {
+
+    private static final long serialVersionUID = 8987320535538607138L;
+
     /**
      * Converts character above ASCII to its ASCII equivalents.  For example,
      * accents are removed from accented characters.

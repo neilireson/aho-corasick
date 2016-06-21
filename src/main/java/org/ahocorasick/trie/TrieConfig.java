@@ -7,6 +7,8 @@ import java.io.Serializable;
 public class TrieConfig
         implements Serializable {
 
+    private static final long serialVersionUID = -177305571297059863L;
+
     private boolean allowOverlaps = true;
 
     private boolean onlyWholeWords = false;

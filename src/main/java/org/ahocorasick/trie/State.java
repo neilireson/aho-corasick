@@ -27,6 +27,8 @@ import java.util.*;
 public class State
     implements Serializable {
 
+    private static final long serialVersionUID = -7391073787286297822L;
+
     /** effective the size of the keyword */
     private final int depth;
 

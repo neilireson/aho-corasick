@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  */
 public interface CharacterConverter
-extends Serializable {
+        extends Serializable {
     String convert(char[] chars);
 
     char[] convert(char character);
