@@ -1,5 +1,6 @@
 package org.ahocorasick.trie;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -23,7 +24,8 @@ import java.util.*;
  *
  * @author Robert Bor
  */
-public class State {
+public class State
+    implements Serializable {
 
     /** effective the size of the keyword */
     private final int depth;

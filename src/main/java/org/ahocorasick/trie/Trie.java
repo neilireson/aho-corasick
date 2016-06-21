@@ -6,6 +6,7 @@ import org.ahocorasick.text.CharacterConverter;
 import org.ahocorasick.trie.handler.DefaultEmitHandler;
 import org.ahocorasick.trie.handler.EmitHandler;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -17,7 +18,8 @@ import java.util.concurrent.LinkedBlockingDeque;
  *
  * @author Robert Bor
  */
-public class Trie {
+public class Trie
+        implements Serializable {
 
     private TrieConfig trieConfig;
 
@@ -344,7 +346,6 @@ public class Trie {
             trie.addKeyword(keyword);
             return this;
         }
-
         public TrieBuilder stopOnHit() {
             trie.trieConfig.setStopOnHit(true);
             return this;

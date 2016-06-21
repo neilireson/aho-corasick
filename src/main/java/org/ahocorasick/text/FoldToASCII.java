@@ -17,6 +17,8 @@ package org.ahocorasick.text;
  * limitations under the License.
  */
 
+import java.io.Serializable;
+
 /**
  * This class converts alphabetic, numeric, and symbolic Unicode characters
  * which are not in the first 127 ASCII characters (the "Basic Latin" Unicode
@@ -49,7 +51,7 @@ package org.ahocorasick.text;
  * For example, '&agrave;' will be replaced by 'a'.
  */
 public class FoldToASCII
-        implements CharacterConverter {
+        extends AbstractCharacterConverter {
     /**
      * Converts character above ASCII to its ASCII equivalents.  For example,
      * accents are removed from accented characters.
